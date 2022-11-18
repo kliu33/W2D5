@@ -41,9 +41,9 @@ class List
     end
 
     def print
-        puts "Index | Item           | Deadline"
+        puts "Index | Item           | Deadline  |  Completed?"
         @items.each_with_index do |item, idx|
-            puts "#{idx}     | #{item.title.ljust(12)}   | #{item.deadline}"
+            puts "#{idx}     | #{item.title.ljust(12)}   | #{item.deadline}  | [#{item.track ? "✓" : " "}]"
         end
         puts "\n"
     end
@@ -52,7 +52,7 @@ class List
         if valid_index?(index)
             puts "----------------------------------------"
             puts "#{@items[index.to_i].title.ljust(25)} #{@items[index.to_i].deadline}"
-            puts "#{@items[index.to_i].description.ljust(25)} #{@items[index.to_i].track}"
+            puts "#{@items[index.to_i].description.ljust(25)} [#{@items[index.to_i].track ? "✓" : " "}]"
             puts "----------------------------------------"
         end
     end
@@ -92,8 +92,22 @@ class List
     def toggle_item(index)
         @items[index.to_i].toggle
     end
-end
 
+    def remove_item(index)
+        idx = index.to_i
+        return false if !valid_index?(idx)
+        @items.delete_at(idx)
+        true
+    end
+
+    def purge
+        (size-1).downto(0).each do |idx|
+            if @items[idx].track == true
+                remove_item(idx)
+            end
+        end
+    end
+end
 
 
 

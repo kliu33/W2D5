@@ -4,7 +4,7 @@ require_relative "item.rb"
 class TodoBoard
 
     def initialize(label)
-        @list = List.new(label)
+        @lists = Hash.new
     end
 
     def get_command
@@ -12,29 +12,45 @@ class TodoBoard
         command, *args = gets.chomp.split(' ')
 
         case command
+
+        when 'mklist'
+            self.make_new_list(*args)
+            return true
+        when 'ls'
+            self.print_labels
+            return true
+        when 'showall'
+            self.showall
+            return true
         when 'mktodo'
-            @list.add_item(*args)
+            @lists[args[0]].add_item(args[1],args[2])
             return true
         when 'up' 
-            @list.up(*args)
+            @lists[args[0]].up(args[1..-1])
             return true
         when 'down'
-            @list.down(*args)
+            @lists[args[0]].down(args[1..-1])
             return true
         when 'swap'
-            @list.swap(*args)
+            @lists[args[0]].swag(args[1],args[2])
             return true
         when 'toggle'
-            @list.toggle_item(*args)
+            @lists[args[0]].toggle_item(args[1])
             return true
         when 'sort'
-            @list.sort_by_date!
+            @lists[*args].sort_by_date!
             return true
         when 'priority'
-            @list.print_priority
+            @lists[*args].print_priority
+            return true
+        when 'rm'
+            @lists[args[0]].remove_item(args[1])
+            return true
+        when 'purge'
+            @lists[*args].purge
             return true
         when 'print'
-            args.length == 0 ? @list.print : @list.print_item_full(*args)
+            args.length == 1 ? @lists[args[0]].print : @lists[args[0]].print_item_full(args[1])
             return true
         when 'quit'
             return false
@@ -42,6 +58,22 @@ class TodoBoard
             print "Sorry, that command is not recognized."
             puts "\n"
             return true
+        end
+    end
+
+    def make_new_list(label)
+        @lists[label] = List.new(label)
+    end
+
+    def print_labels
+        @lists.keys.each do |key|
+            puts key
+        end
+    end
+
+    def showall
+        @lists.each do |k,v|
+            v.print
         end
     end
 
