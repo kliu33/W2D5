@@ -84,16 +84,17 @@ class List
         end
         true
     end
+
+    def sort_by_date!
+        @items.sort_by! {|item| item.deadline}
+    end
 end
 
-#my_list = List.new('Groceries')
-#my_list.add_item('cheese', '2019-10-25', 'Get American and Feta for good measure.')
-#my_list.add_item('toothpaste', '2019-10-25')
-#my_list.add_item('shampoo', '2019-10-24')
-#my_list.add_item('candy', '2019-10-31', '4 bags should be enough')
-#my_list.print
-#my_list.print_priority
-#my_list.up(3,5)
-#my_list.print
-#my_list.down(-1,2)
-#my_list.print
+# my_list = List.new('Groceries')
+# my_list.add_item('cheese', '2019-10-25', 'Get American and Feta for good measure.')
+# my_list.add_item('toothpaste', '2019-10-25')
+# my_list.add_item('shampoo', '2019-10-24')
+# my_list.add_item('candy', '2019-10-31', '4 bags should be enough')
+# my_list.print
+# my_list.sort_by_date!
+# my_list.print
