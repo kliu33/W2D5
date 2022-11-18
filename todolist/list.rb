@@ -20,22 +20,20 @@ class List
     end
 
     def valid_index?(index)
-        if index < 0 || index > size - 1
-            p "invalid index #{index}"
-            return false 
-        end
+        idx = index.to_i
+        return false if idx < 0 || idx > (size - 1)
         true
     end 
 
     def swap(index_1, index_2)
-        return false if !valid_index?(index_1) || !valid_index?(index_2)
-        @items[index_1] , @items[index_2] = @items[index_2] , @items[index_1]
+        return false if !valid_index?(index_1.to_i) || !valid_index?(index_2.to_i)
+        @items[index_1.to_i] , @items[index_2.to_i] = @items[index_2.to_i] , @items[index_1.to_i]
         true
     end
 
     def [](index)
-        return nil if !valid_index?(index)
-        @items[index]
+        return nil if !valid_index?(index.to_i)
+        @items[index.to_i]
     end
 
     def priority
@@ -53,8 +51,8 @@ class List
     def print_item_full(index)
         if valid_index?(index)
             puts "----------------------------------------"
-            puts "#{@items[index].title.ljust(25)} #{@items[index].deadline}"
-            puts @items[index].description
+            puts "#{@items[index.to_i].title.ljust(25)} #{@items[index.to_i].deadline}"
+            puts @items[index.to_i].description
             puts "----------------------------------------"
         end
     end
@@ -64,22 +62,24 @@ class List
     end
 
     def up(index, amount = 1)
-        return false if !valid_index?(index)
-        amount.times do 
-            if index != 0
-                swap(index, index-1)
-                index -= 1
+        idx = index.to_i
+        return false if !valid_index?(idx)
+        amount.to_i.times do 
+            if idx != 0
+                swap(idx, idx-1)
+                idx -= 1
             end
         end
         true
     end
 
     def down(index, amount = 1)
-        return false if !valid_index?(index)
-        amount.times do 
-            if index != size - 1
-                swap(index, index+1)
-                index += 1
+        idx = index.to_i
+        return false if !valid_index?(idx)
+        amount.to_i.times do 
+            if idx != size - 1
+                swap(idx, idx+1)
+                idx += 1
             end
         end
         true
