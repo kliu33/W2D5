@@ -52,7 +52,7 @@ class List
         if valid_index?(index)
             puts "----------------------------------------"
             puts "#{@items[index.to_i].title.ljust(25)} #{@items[index.to_i].deadline}"
-            puts @items[index.to_i].description
+            puts "#{@items[index.to_i].description.ljust(25)} #{@items[index.to_i].track}"
             puts "----------------------------------------"
         end
     end
@@ -88,7 +88,15 @@ class List
     def sort_by_date!
         @items.sort_by! {|item| item.deadline}
     end
+
+    def toggle_item(index)
+        @items[index.to_i].toggle
+    end
 end
+
+
+
+
 
 # my_list = List.new('Groceries')
 # my_list.add_item('cheese', '2019-10-25', 'Get American and Feta for good measure.')

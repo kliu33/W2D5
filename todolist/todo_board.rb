@@ -24,6 +24,9 @@ class TodoBoard
         when 'swap'
             @list.swap(*args)
             return true
+        when 'toggle'
+            @list.toggle_item(*args)
+            return true
         when 'sort'
             @list.sort_by_date!
             return true

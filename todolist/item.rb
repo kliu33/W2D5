@@ -1,6 +1,6 @@
 class Item
 
-    attr_reader :deadline
+    attr_reader :deadline, :track
     attr_accessor :title, :description
 
     def self.valid_date?(date)
@@ -25,7 +25,7 @@ class Item
     def initialize(title, deadline, description)
         @title = title
         @description = description
-        
+        @track = false
         raise "deadline is not valid" unless self.class.valid_date?(deadline)
         @deadline = deadline
     end
@@ -34,4 +34,12 @@ class Item
         raise "deadline is not valid" unless self.class.valid_date?(deadline)
         @deadline = deadline
     end 
+
+    def toggle
+        if @track == true
+            @track = false
+        else
+            @track = true
+        end
+    end
 end 
